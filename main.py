@@ -1,7 +1,6 @@
 import pgzrun
 import random
 
-from pgzero import screen
 from pgzero.actor import Actor
 import pygame
 
@@ -29,7 +28,7 @@ class Ball:
         self.speed = speed
         self.ball_dx = self.speed
         self.ball_dy = self.speed
-        self.radius = 11
+        self.radius = 13
 
     def update(self):
         self.actor.x += self.ball_dx
@@ -45,8 +44,13 @@ class Ball:
         self.actor.draw()
 
 
+class Platform:
+    pass
+
+
 paddle = Paddle()
 ball = Ball(5)
+platform = Platform()
 
 
 def draw():
