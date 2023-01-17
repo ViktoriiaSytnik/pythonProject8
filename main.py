@@ -46,6 +46,7 @@ class Ball:
 
 paddle = Paddle()
 obstacles = []
+points = 0
 dictionary = {
     1: 'blue', 2: 'green', 3: 'purple'
 }
@@ -69,6 +70,9 @@ def draw():
 
     for obstacle in obstacles:
         obstacle.draw()
+
+    if points == 19:
+        screen.draw.text(f"You won the game!", (HEIGHT / 2 - 200, WIDTH / 2), color=(200, 200, 0), fontsize= 50)
 
 
 def on_mouse_move(pos):
