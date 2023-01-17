@@ -9,6 +9,16 @@ RADIUS = 20
 TITLE = "Christmas Breakout"
 
 
+class Heart:
+    def __init__(self, i, y):
+        self.x = 20 + 35 * i
+        self.y = y
+        self.actor = Actor('heart-3.png', center=(self.x, self.y))
+
+    def draw(self):
+        self.actor.draw()
+
+
 class Obstacle:
     def __init__(self, x, y, strength, color):
         self.x = x
@@ -63,7 +73,9 @@ for obstacle in range(m):
     strength = random.randint(1, 3)
     obstacles.append(Obstacle(x, 150, strength, dictionary[strength]))
     x = x + 50
-
+hearts = []
+for i in range(3):
+    hearts.append(Heart(i, 20))
 
 def draw():
     screen.clear()
@@ -71,8 +83,16 @@ def draw():
     for obstacle in obstacles:
         obstacle.draw()
 
+    screen.draw.text(f"points: {points}", (500, 20), color=(200, 200, 200))
+
     if points == 19:
         screen.draw.text(f"You won the game!", (HEIGHT / 2 - 200, WIDTH / 2), color=(200, 200, 0), fontsize= 50)
+
+    for heart in hearts:
+        heart.draw()
+
+    if len(hearts) == 0:
+        screen.draw.text(f"You lost the game!", (HEIGHT / 2 - 200, WIDTH / 2), color=(200, 200, 0), fontsize= 50)
 
 
 def update():
@@ -85,6 +105,11 @@ def update():
             if obstacle.strength == 0:
                 points += 1
                 obstacles.remove(obstacle)
+
+    if ball.actor.y >= HEIGHT:
+        hearts.pop(len(hearts)-1)
+        ball.actor.x = WIDTH / 2
+        ball.actor.y = HEIGHT / 2
 
 
 def on_mouse_move(pos):
