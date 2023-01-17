@@ -75,6 +75,18 @@ def draw():
         screen.draw.text(f"You won the game!", (HEIGHT / 2 - 200, WIDTH / 2), color=(200, 200, 0), fontsize= 50)
 
 
+def update():
+    for obstacle in obstacles:
+        if abs(ball.actor.y - obstacle.y) < RADIUS * 2 and abs(ball.actor.x - obstacle.x) < RADIUS * 2:
+            ball.ball_dx *= -1
+            ball.ball_dy *= -1
+            global points
+            obstacle.strength -= 1
+            if obstacle.strength == 0:
+                points += 1
+                obstacles.remove(obstacle)
+
+
 def on_mouse_move(pos):
     x, y = pos
     paddle.actor.x = x
