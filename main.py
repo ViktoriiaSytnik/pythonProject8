@@ -5,7 +5,19 @@ import pygame
 
 WIDTH = 600
 HEIGHT = 600
+RADIUS = 20
 TITLE = "Christmas Breakout"
+
+
+class Obstacle:
+    def __init__(self, x, y, strength, color):
+        self.x = x
+        self.y = y
+        self.strength = strength
+        self.color = color
+
+    def draw(self):
+        screen.draw.filled_circle((self.x, self.y), RADIUS, self.color)
 
 
 class Paddle:
