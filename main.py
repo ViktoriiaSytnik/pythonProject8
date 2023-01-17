@@ -45,6 +45,30 @@ class Ball:
 
 
 paddle = Paddle()
+obstacles = []
+dictionary = {
+    1: 'blue', 2: 'green', 3: 'purple'
+}
+n = 10
+m = 9
+x = 50
+for obstacle in range(n):
+    strength = random.randint(1, 3)
+    obstacles.append(Obstacle(x, 100, strength, dictionary[strength]))
+    x = x + 55
+
+x = 100
+for obstacle in range(m):
+    strength = random.randint(1, 3)
+    obstacles.append(Obstacle(x, 150, strength, dictionary[strength]))
+    x = x + 50
+
+
+def draw():
+    screen.clear()
+
+    for obstacle in obstacles:
+        obstacle.draw()
 
 
 def on_mouse_move(pos):
