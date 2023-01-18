@@ -117,6 +117,8 @@ def draw():
 
 
 def update(dt):
+    ball.update()
+    paddle.update(ball)
     for obstacle in obstacles:
         if abs(ball.actor.y - obstacle.y) < radius * 2 and abs(ball.actor.x - obstacle.x) < radius * 2:
             ball.ball_dx *= -1
@@ -133,8 +135,7 @@ def update(dt):
             ball.actor.y = HEIGHT / 2
 
 
-ball.update()
-paddle.update(ball)
+
 
 
 def on_mouse_move(pos):
