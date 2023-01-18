@@ -1,13 +1,35 @@
 import pgzrun
 import random
-
 from pgzero.actor import Actor
 import pygame
 
 
 WIDTH = 600
 HEIGHT = 600
-radius = 20
+RADIUS = 20
+TITLE = "Christmas Breakout"
+
+
+
+class Heart:
+    def __init__(self, i, y):
+        self.x = 20 + 35 * i
+        self.y = y
+        self.actor = Actor('heart-3.png', center=(self.x, self.y))
+
+    def draw(self):
+        self.actor.draw()
+
+
+class Obstacle:
+    def __init__(self, x, y, strength, color):
+        self.x = x
+        self.y = y
+        self.strength = strength
+        self.color = color
+
+    def draw(self):
+        screen.draw.filled_circle((self.x, self.y), RADIUS, self.color)
 
 
 class Paddle:
@@ -70,6 +92,7 @@ class Obstacle:
 
 paddle = Paddle()
 ball = Ball(5)
+platform = Platform()
 obstacles = []
 points = 0
 dictionary = {
@@ -94,6 +117,7 @@ for i in range(3):
     hearts.append(Heart(i, 20))
 
 
+
 def draw():
     screen.clear()
     paddle.draw()
@@ -115,10 +139,26 @@ def draw():
     if len(hearts) == 0:
         screen.draw.text(f"You lost the game!", (HEIGHT / 2 - 200, WIDTH / 2), color=(200, 200, 0), fontsize=50)
 
+    for obstacle in obstacles:
+        obstacle.draw()
+
+    screen.draw.text(f"points: {points}", (500, 20), color=(200, 200, 200))
+
+    if points == 19:
+        screen.draw.text(f"You won the game!", (HEIGHT / 2 - 200, WIDTH / 2), color=(200, 200, 0), fontsize= 50)
+
+    for heart in hearts:
+        heart.draw()
+
+    if len(hearts) == 0:
+        screen.draw.text(f"You lost the game!", (HEIGHT / 2 - 200, WIDTH / 2), color=(200, 200, 0), fontsize= 50)
+
 
 def update(dt):
     for obstacle in obstacles:
-        if abs(ball.actor.y - obstacle.y) < radius * 2 and abs(ball.actor.x - obstacle.x) < radius * 2:
+    if abs(ball.actor.y - obstacle.y) < radius * 2 and abs(ball.actor.x - obstacle.x) < RADIUS * 2:
+
+        if abs(ball.actor.y - obstacle.y) < RADIUS * 2 and abs(ball.actor.x - obstacle.x) < RADIUS * 2:
             ball.ball_dx *= -1
             ball.ball_dy *= -1
             global points
@@ -127,14 +167,28 @@ def update(dt):
                 points += 1
                 obstacles.remove(obstacle)
 
+
         if ball.actor.y >= HEIGHT:
             hearts.pop(len(hearts) - 1)
             ball.actor.x = WIDTH / 2
             ball.actor.y = HEIGHT / 2
 
 
+    if ball.actor.y >= HEIGHT:
+        hearts.pop(len(hearts)-1)
+        ball.actor.x = WIDTH / 2
+        ball.actor.y = HEIGHT / 2
+ 
 ball.update()
 paddle.update(ball)
+
+
+
+
+
+
+
+
 
 
 def on_mouse_move(pos):
