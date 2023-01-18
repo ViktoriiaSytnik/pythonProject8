@@ -4,7 +4,6 @@ import random
 from pgzero.actor import Actor
 import pygame
 
-
 WIDTH = 600
 HEIGHT = 600
 radius = 20
@@ -133,9 +132,6 @@ def update(dt):
             hearts.pop(len(hearts) - 1)
             ball.actor.x = WIDTH / 2
             ball.actor.y = HEIGHT / 2
-
-
-
 
 
 def on_mouse_move(pos):
